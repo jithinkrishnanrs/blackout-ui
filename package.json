@@ -1,0 +1,83 @@
+{
+  "name": "blackout-ui",
+  "version": "0.1.0",
+  "description": "A tiny, framework-agnostic library that turns any webpage into a flashlight/blackout interface without touching the page's existing CSS, HTML, or theme.",
+  "keywords": [
+    "flashlight",
+    "cursor effect",
+    "blackout",
+    "spotlight",
+    "reveal effect",
+    "ui",
+    "dom",
+    "typescript",
+    "vanilla-js",
+    "interaction"
+  ],
+  "license": "MIT",
+  "author": "Blackout UI Contributors",
+  "homepage": "https://github.com/blackout-ui/blackout-ui#readme",
+  "bugs": {
+    "url": "https://github.com/blackout-ui/blackout-ui/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/blackout-ui/blackout-ui.git"
+  },
+  "type": "module",
+  "sideEffects": false,
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "unpkg": "./dist/blackout-ui.global.js",
+  "jsdelivr": "./dist/blackout-ui.global.js",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs",
+      "default": "./dist/index.js"
+    },
+    "./css": "./dist/blackout.css",
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE",
+    "CHANGELOG.md"
+  ],
+  "engines": {
+    "node": ">=16"
+  },
+  "scripts": {
+    "dev": "tsup --watch",
+    "build": "tsup",
+    "demo": "npm run build && node scripts/prepare-demo.mjs && npx http-server demo -p 4173 -o",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "test:e2e": "playwright test",
+    "lint": "eslint .",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "typecheck": "tsc --noEmit",
+    "size": "node scripts/check-size.mjs",
+    "check": "npm run typecheck && npm run lint && npm run test && npm run build && npm run size"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.47.0",
+    "@types/node": "^22.7.4",
+    "@typescript-eslint/eslint-plugin": "^8.8.0",
+    "@typescript-eslint/parser": "^8.8.0",
+    "eslint": "^9.11.1",
+    "http-server": "^14.1.1",
+    "jsdom": "^25.0.1",
+    "prettier": "^3.3.3",
+    "tsup": "^8.3.0",
+    "typescript": "^5.6.2",
+    "vitest": "^2.1.1"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}

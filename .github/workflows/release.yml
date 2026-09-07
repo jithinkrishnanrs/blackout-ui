@@ -1,0 +1,29 @@
+name: Release
+
+# Deliberately manual: publishing to npm never happens automatically on
+# push. A maintainer triggers this from the Actions tab after running
+# `npm version <patch|minor|major>` and pushing the resulting tag.
+on:
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: 'npm dist-tag to publish under'
+        required: false
+        default: 'latest'
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20.x
+          registry-url: 'https://registry.npmjs.org'
+
+      - run: npm ci
+      - run: npm run check
+      - run: npm publish --tag ${{ github.event.inputs.tag }}
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}

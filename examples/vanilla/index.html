@@ -1,0 +1,23 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Blackout UI — Vanilla JS example</title>
+  </head>
+  <body>
+    <h1>Move your cursor around the page</h1>
+    <p>This page uses Blackout UI with no framework and no build step.</p>
+    <button id="toggle">Toggle blackout</button>
+
+    <!-- For a real project: npm install blackout-ui, then import from "blackout-ui". -->
+    <script type="module">
+      import Blackout from 'blackout-ui';
+
+      Blackout.init({ radius: 200, softness: 40 });
+
+      document.getElementById('toggle').addEventListener('click', () => {
+        Blackout.toggle();
+      });
+    </script>
+  </body>
+</html>

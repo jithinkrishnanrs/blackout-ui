@@ -1,0 +1,23 @@
+/*
+ * Blackout UI overlay styles.
+ * Every selector is scoped under .blackout-ui-root to avoid leaking into
+ * the host page. Nothing here targets a bare element (body, div, button…).
+ */
+.blackout-ui-root {
+  position: fixed;
+  inset: 0;
+  z-index: 2147483647;
+  pointer-events: none;
+  will-change: background;
+  contain: strict;
+}
+
+.blackout-ui-root[data-blackout-enabled='false'] {
+  display: none;
+}
+
+@media print {
+  .blackout-ui-root {
+    display: none !important;
+  }
+}
