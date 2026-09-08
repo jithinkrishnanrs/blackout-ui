@@ -1,6 +1,6 @@
 {
   "name": "blackout-ui",
-  "version": "0.1.1",
+  "version": "0.2.0",
   "description": "A tiny, framework-agnostic library that turns any webpage into a flashlight/blackout interface without touching the page's existing CSS, HTML, or theme.",
   "keywords": [
     "flashlight",
@@ -15,14 +15,14 @@
     "interaction"
   ],
   "license": "MIT",
-  "author": "Blackout UI Contributors",
-  "homepage": "https://github.com/blackout-ui/blackout-ui#readme",
+  "author": "Jithin Krishna (https://github.com/jithinkrishnanrs)",
+  "homepage": "https://github.com/jithinkrishnanrs/blackout-ui#readme",
   "bugs": {
-    "url": "https://github.com/blackout-ui/blackout-ui/issues"
+    "url": "https://github.com/jithinkrishnanrs/blackout-ui/issues"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/blackout-ui/blackout-ui.git"
+    "url": "git+https://github.com/jithinkrishnanrs/blackout-ui.git"
   },
   "type": "module",
   "sideEffects": false,

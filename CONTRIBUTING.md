@@ -5,7 +5,7 @@ Thanks for considering a contribution to Blackout UI.
 ## Getting set up
 
 ```bash
-git clone https://github.com/blackout-ui/blackout-ui.git
+git clone https://github.com/jithinkrishnanrs/blackout-ui.git
 cd blackout-ui
 npm install
 npm run dev

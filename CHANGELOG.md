@@ -4,7 +4,32 @@ All notable changes to this project are documented in this file. The format
 follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and this
 project adheres to [Semantic Versioning](https://semver.org/).
 
-## [0.1.0] — Unreleased
+## [0.2.0] — 2026-09-07
+
+### Added
+
+- Homepage/demo overhaul: Blackout now starts **off** by default on the
+  demo site, with a large "Turn On Blackout" CTA as the primary
+  interaction. The site's live playground, configuration reference, API
+  reference, framework examples, accessibility notes, edge-case table, and
+  FAQ are all generated from — and kept honest against — the actual public
+  API in `src/core/types.ts`.
+- `scripts/prepare-demo.mjs` now also emits `demo/vendor/meta.json`
+  containing the real, freshly-measured gzip size of each build output and
+  the current package version, so the homepage never displays a stale or
+  hand-typed number.
+- Project links (README, `package.json`, `LICENSE`, `CONTRIBUTING.md`,
+  `SECURITY.md`, demo site) now point at the public repository:
+  [github.com/jithinkrishnanrs/blackout-ui](https://github.com/jithinkrishnanrs/blackout-ui).
+- CI/npm/license badges added to the README.
+
+### Changed
+
+- No changes to the public API or core library behavior in this release —
+  see [0.1.0](#010--2026-09-06) for the full API surface, which is
+  unchanged.
+
+## [0.1.0] — 2026-09-06
 
 ### Added
 

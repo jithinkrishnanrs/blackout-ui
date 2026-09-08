@@ -3,21 +3,52 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Blackout UI — Flashlight Dark Interface for the Web</title>
+    <title>Blackout UI — Flashlight UI for the Web</title>
     <meta
       name="description"
-      content="A lightweight JavaScript and TypeScript library that turns any webpage into a true blackout flashlight experience. Framework agnostic, zero dependencies, under 4KB gzipped."
+      content="Blackout UI drops a fullscreen black layer over your existing webpage and reveals it around the pointer like a flashlight — a JavaScript blackout overlay and cursor reveal effect that never changes your site's colors or theme. Zero dependencies, ~3.5KB gzipped."
     />
     <meta
       name="keywords"
-      content="JavaScript flashlight effect, cursor flashlight, dark UI, blackout effect, web interaction library, NPM UI library, cursor reveal effect"
+      content="flashlight UI, web flashlight effect, blackout overlay, JavaScript blackout effect, interactive darkness, cursor reveal effect, spotlight cursor, dark UI, web interaction library"
     />
-    <meta property="og:title" content="Blackout UI — Flashlight Dark Interface for the Web" />
+    <link rel="canonical" href="https://jithinkrishnanrs.github.io/blackout-ui/" />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Blackout UI — Flashlight UI for the Web" />
     <meta
       property="og:description"
-      content="Turn any webpage into a blackout / flashlight interface. Zero dependencies, framework agnostic, under 4KB gzipped."
+      content="A fullscreen blackout / flashlight interaction for any webpage. Zero dependencies, framework agnostic, ~3.5KB gzipped. Your theme stays exactly as it is."
     />
-    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://jithinkrishnanrs.github.io/blackout-ui/" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Blackout UI — Flashlight UI for the Web" />
+    <meta
+      name="twitter:description"
+      content="A fullscreen blackout / flashlight interaction for any webpage. Zero dependencies, ~3.5KB gzipped."
+    />
+
+    <link
+      rel="icon"
+      href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%2305060a'/%3E%3Ccircle cx='16' cy='16' r='7' fill='%23ffc857'/%3E%3C/svg%3E"
+    />
+
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "SoftwareApplication",
+        "name": "Blackout UI",
+        "applicationCategory": "DeveloperApplication",
+        "operatingSystem": "Any",
+        "description": "A framework-agnostic JavaScript/TypeScript library that overlays a webpage with a fullscreen black layer and reveals the existing page around the pointer, like a flashlight.",
+        "url": "https://github.com/jithinkrishnanrs/blackout-ui",
+        "codeRepository": "https://github.com/jithinkrishnanrs/blackout-ui",
+        "softwareVersion": "0.2.0",
+        "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+        "license": "https://opensource.org/licenses/MIT"
+      }
+    </script>
+
     <link rel="stylesheet" href="./styles.css" />
   </head>
   <body>
@@ -25,47 +56,66 @@
 
     <header class="topbar">
       <div class="topbar__inner">
-        <span class="wordmark">Blackout UI</span>
+        <a href="#top" class="wordmark">Blackout UI</a>
         <nav class="topbar__nav" aria-label="Primary">
           <a href="#playground">Playground</a>
-          <a href="#code">Install</a>
+          <a href="#how-it-works">How it works</a>
           <a href="#features">Features</a>
+          <a href="#configuration">Configuration</a>
           <a href="#api">API</a>
-          <a href="https://github.com/blackout-ui/blackout-ui">GitHub</a>
+          <a href="#examples">Examples</a>
+          <a href="#faq">FAQ</a>
+          <a href="#install">Install</a>
+          <a href="https://github.com/jithinkrishnanrs/blackout-ui">GitHub</a>
         </nav>
         <div class="topbar__controls">
           <button id="theme-toggle" type="button" class="chip" aria-pressed="false">
-            Switch to light page
+            Light page
           </button>
-          <button id="blackout-toggle" type="button" class="chip chip--accent" aria-pressed="true">
-            Blackout: on
+          <button id="status-chip" type="button" class="chip chip--status" data-state="off" aria-pressed="false">
+            <span class="status-dot" aria-hidden="true"></span>
+            Blackout: off
           </button>
         </div>
       </div>
     </header>
 
     <main id="main">
-      <section class="hero" aria-label="Introduction">
-        <p class="hero__hint" id="hero-hint">Move your cursor.</p>
-        <h1 class="hero__title">BLACKOUT UI</h1>
-        <p class="hero__tagline">The web, one flashlight beam at a time.</p>
+      <!-- ============================== HERO ============================== -->
+      <section class="hero" id="top" aria-label="Introduction">
+        <p class="eyebrow">A darkness interaction engine for the web</p>
+        <h1 class="hero__title">Darkness outside.<br />Your website inside.</h1>
         <p class="hero__body">
-          Blackout UI drops a solid black layer over your page and cuts a hole around the
-          pointer. Nothing underneath is repainted, re-themed, or rebuilt — the flashlight just
-          reveals whatever is already there.
+          Blackout UI places a fullscreen black layer over your existing page and reveals the
+          page — exactly as it already renders — around the pointer, like a flashlight. It does
+          not repaint your site, convert it to dark mode, or touch a single line of your CSS.
+        </p>
+
+        <div class="hero__cta-wrap">
+          <button id="hero-cta" type="button" class="cta-button" aria-pressed="false">
+            <span class="cta-button__label">Turn On Blackout</span>
+          </button>
+          <p class="hero__cta-hint" id="cta-hint">Click to activate the flashlight.</p>
+        </div>
+
+        <p class="hero__reveal-hint" id="reveal-hint" aria-hidden="true">
+          Move your cursor to explore
         </p>
       </section>
 
+      <!-- ============================ PLAYGROUND ============================ -->
       <section id="playground" class="section">
-        <h2>Live playground</h2>
+        <p class="section__kicker">Live playground</p>
+        <h2>Configure the real instance</h2>
         <p class="section__lede">
-          This page is running the real package from <code>dist/</code> — nothing here is
-          faked. Adjust the flashlight and see it change live.
+          This isn't a mockup — these controls call the actual
+          <code>blackout.configure()</code> API on the same instance running the hero above. Turn
+          Blackout on to see changes as you make them.
         </p>
 
         <div class="playground">
           <div class="playground__control">
-            <label for="radius">Radius <span id="radius-value">180</span>px</label>
+            <label for="radius">Reveal radius <span id="radius-value">180</span>px</label>
             <input id="radius" type="range" min="40" max="500" value="180" />
           </div>
           <div class="playground__control">
@@ -73,11 +123,11 @@
             <input id="softness" type="range" min="0" max="100" value="35" />
           </div>
           <div class="playground__control">
-            <label for="darkness">Darkness <span id="darkness-value">1.0</span></label>
+            <label for="darkness">Darkness <span id="darkness-value">1.00</span></label>
             <input id="darkness" type="range" min="0" max="100" value="100" />
           </div>
           <div class="playground__control">
-            <label for="intensity">Intensity <span id="intensity-value">1.0</span></label>
+            <label for="intensity">Intensity <span id="intensity-value">1.00</span></label>
             <input id="intensity" type="range" min="0" max="100" value="100" />
           </div>
           <div class="playground__control playground__control--row">
@@ -90,7 +140,7 @@
             </div>
           </div>
           <div class="playground__control playground__control--row">
-            <span>Cursor</span>
+            <span>Native cursor</span>
             <div class="segmented" role="group" aria-label="Native cursor visibility">
               <button type="button" data-cursor="visible" class="segmented__option is-active">
                 Visible
@@ -99,89 +149,591 @@
             </div>
           </div>
           <div class="playground__control playground__control--row">
-            <span>Touch</span>
-            <div class="segmented" role="group" aria-label="Touch input">
-              <button type="button" data-touch="on" class="segmented__option is-active">On</button>
-              <button type="button" data-touch="off" class="segmented__option">Off</button>
+            <span>Touch input</span>
+            <label class="switch">
+              <input type="checkbox" id="touch-enabled" checked />
+              <span>Enable touch interaction</span>
+            </label>
+          </div>
+          <div class="playground__control playground__control--row">
+            <span>On pointer leave</span>
+            <div class="segmented" role="group" aria-label="Pointer leave behavior">
+              <button type="button" data-leave="freeze" class="segmented__option is-active">
+                Freeze
+              </button>
+              <button type="button" data-leave="center" class="segmented__option">Center</button>
+              <button type="button" data-leave="hide" class="segmented__option">Hide</button>
             </div>
+          </div>
+
+          <div class="playground__actions">
+            <button id="reset-config" type="button" class="ghost-button">
+              Reset configuration
+            </button>
           </div>
         </div>
       </section>
 
-      <section id="code" class="section">
-        <h2>Install</h2>
-        <p class="section__lede">Works with a bundler, or straight from a CDN. No configuration required.</p>
+      <!-- ========================== HOW IT WORKS ========================== -->
+      <section id="how-it-works" class="section">
+        <p class="section__kicker">How it works</p>
+        <h2>Blackout UI does not redesign your website</h2>
+        <p class="section__lede">
+          It adds one fullscreen, non-interactive layer above the page and reveals the existing
+          rendered content around the pointer. Nothing about your page changes underneath it.
+        </p>
 
-        <pre class="code-block"><code>npm install blackout-ui</code></pre>
-        <pre class="code-block"><code>import Blackout from "blackout-ui";
+        <div
+          class="pipeline"
+          role="img"
+          aria-label="Your existing website, then a fullscreen black overlay, then a pointer-controlled reveal, resulting in a flashlight experience"
+        >
+          <div class="pipeline__step">Your existing website</div>
+          <div class="pipeline__arrow">↓</div>
+          <div class="pipeline__step">Fullscreen black overlay</div>
+          <div class="pipeline__arrow">↓</div>
+          <div class="pipeline__step">Pointer-controlled reveal</div>
+          <div class="pipeline__arrow">↓</div>
+          <div class="pipeline__step pipeline__step--result">Flashlight experience</div>
+        </div>
 
-Blackout.init();</code></pre>
-
-        <p class="section__lede">Or drop it straight into a page with no build step:</p>
-        <pre class="code-block"><code>&lt;script src="https://unpkg.com/blackout-ui"&gt;&lt;/script&gt;
-&lt;script&gt;
-  BlackoutUI.init();
-&lt;/script&gt;</code></pre>
+        <ul class="checklist">
+          <li>Your existing DOM remains intact — the library adds one overlay element and one stylesheet, nothing more.</li>
+          <li>Your existing styles remain intact — no CSS is rewritten, no colors inverted.</li>
+          <li>Your existing theme remains intact — light or dark, it's untouched.</li>
+          <li>The library does not require a dark theme. The page can be light, dark, or anything else.</li>
+          <li>Theme changes keep working normally — the flashlight simply reveals whatever is currently rendered underneath.</li>
+        </ul>
       </section>
 
+      <!-- ======================== NOT DARK MODE ======================== -->
+      <section id="not-dark-mode" class="section section--contrast">
+        <p class="section__kicker">Not another dark mode library</p>
+        <h2>It doesn't restyle anything</h2>
+        <p class="section__lede">
+          Traditional dark-mode libraries rewrite your page: backgrounds go black, text goes
+          white, images get adjusted, components get restyled. Blackout UI does something
+          fundamentally different.
+        </p>
+        <div class="compare">
+          <div class="compare__col">
+            <h3>Typical dark-mode library</h3>
+            <ul>
+              <li>background → black</li>
+              <li>text → white</li>
+              <li>images → adjusted</li>
+              <li>components → restyled</li>
+            </ul>
+          </div>
+          <div class="compare__col compare__col--accent">
+            <h3>Blackout UI</h3>
+            <ul>
+              <li>Your website stays exactly as it is</li>
+              <li>A black layer goes on top</li>
+              <li>The pointer reveals the website underneath</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============================ FEATURES ============================ -->
       <section id="features" class="section">
-        <h2>What it does — and doesn't do</h2>
+        <p class="section__kicker">Features</p>
+        <h2>What's actually implemented</h2>
         <div class="features">
           <article class="feature">
-            <h3>Framework agnostic</h3>
-            <p>Vanilla JS, React, Vue, Svelte, Next.js, Astro, Angular, static HTML — it's just DOM and CSS underneath.</p>
-          </article>
-          <article class="feature">
             <h3>Zero dependencies</h3>
-            <p>Nothing to audit, nothing to update. The published package ships with an empty <code>dependencies</code> field.</p>
+            <p>The published package ships with an empty <code>dependencies</code> field. Nothing to audit, nothing to update.</p>
           </article>
           <article class="feature">
-            <h3>Your theme, untouched</h3>
-            <p>Light mode stays light, dark mode stays dark. Blackout UI never inspects or rewrites your CSS.</p>
+            <h3>Framework agnostic</h3>
+            <p>Plain JavaScript, TypeScript, React, Next.js, Vue, Svelte — it's just DOM and CSS underneath, no framework required.</p>
           </article>
           <article class="feature">
-            <h3>Tiny</h3>
-            <p>Under 4KB gzipped for the core build. No canvas, no WebGL, no animation engine.</p>
+            <h3>Non-invasive</h3>
+            <p>Blackout UI adds one overlay element and one scoped stylesheet. It never rewrites your existing HTML or CSS.</p>
           </article>
           <article class="feature">
-            <h3>Doesn't get in the way</h3>
-            <p>Clicks, hovers, forms, drag-and-drop, and keyboard navigation all pass straight through by default.</p>
+            <h3>Theme independent</h3>
+            <p>Works with light mode, dark mode, or a theme that changes at runtime — the reveal just shows whatever is currently rendered.</p>
           </article>
           <article class="feature">
-            <h3>SSR-safe</h3>
-            <p>Importing the package on the server is a no-op. Nothing touches <code>window</code> until you call a method in the browser.</p>
+            <h3>Touch support</h3>
+            <p>Pointer Events unify mouse, pen, and touch, with a configurable <code>touchBehavior</code> for what happens on lift-off.</p>
+          </article>
+          <article class="feature">
+            <h3>SSR safe</h3>
+            <p>Every method is a documented no-op when <code>window</code>/<code>document</code> don't exist — safe to import on the server.</p>
+          </article>
+          <article class="feature">
+            <h3>Accessible by default</h3>
+            <p>The overlay is <code>aria-hidden</code>, non-focusable, and <code>pointer-events: none</code> by default — nothing underneath is blocked.</p>
+          </article>
+          <article class="feature">
+            <h3 id="bundle-size-heading">Lightweight</h3>
+            <p id="bundle-size-copy">Loading current build size…</p>
           </article>
         </div>
       </section>
 
+      <!-- ========================= CONFIGURATION ========================= -->
+      <section id="configuration" class="section">
+        <p class="section__kicker">Configuration</p>
+        <h2>Every public option</h2>
+        <p class="section__lede">
+          Passed to <code>Blackout.init(options)</code> or <code>blackout.configure(options)</code>.
+          Every field is optional; invalid values are clamped to a safe default rather than
+          thrown.
+        </p>
+
+        <div class="option-list">
+          <article class="option">
+            <header><code>enabled</code><span class="option__type">boolean</span></header>
+            <p>Whether the effect is active immediately after <code>init()</code>.</p>
+            <p class="option__default">Default: <code>true</code></p>
+            <pre class="code-block"><code>Blackout.init({ enabled: false });</code></pre>
+          </article>
+
+          <article class="option">
+            <header><code>radius</code><span class="option__type">number</span></header>
+            <p>Outer radius of the flashlight, in CSS pixels.</p>
+            <p class="option__default">Default: <code>180</code></p>
+            <pre class="code-block"><code>blackout.configure({ radius: 250 });</code></pre>
+          </article>
+
+          <article class="option">
+            <header><code>softness</code><span class="option__type">number (0–100)</span></header>
+            <p>How gradually the flashlight fades to black. <code>0</code> is a hard edge, <code>100</code> fades from the very center.</p>
+            <p class="option__default">Default: <code>35</code></p>
+            <pre class="code-block"><code>blackout.configure({ softness: 60 });</code></pre>
+          </article>
+
+          <article class="option">
+            <header><code>darkness</code><span class="option__type">number (0–1)</span></header>
+            <p>Opacity of the black outside the flashlight. <code>1</code> is fully opaque black.</p>
+            <p class="option__default">Default: <code>1</code></p>
+            <pre class="code-block"><code>blackout.configure({ darkness: 0.9 });</code></pre>
+          </article>
+
+          <article class="option">
+            <header><code>intensity</code><span class="option__type">number (0–1)</span></header>
+            <p>How fully the page is revealed inside the flashlight. <code>1</code> is a full, undimmed reveal.</p>
+            <p class="option__default">Default: <code>1</code></p>
+            <pre class="code-block"><code>blackout.configure({ intensity: 0.8 });</code></pre>
+          </article>
+
+          <article class="option">
+            <header><code>shape</code><span class="option__type">"circle" | "ellipse"</span></header>
+            <p>Shape of the reveal area.</p>
+            <p class="option__default">Default: <code>"circle"</code></p>
+            <pre class="code-block"><code>blackout.configure({ shape: 'ellipse' });</code></pre>
+          </article>
+
+          <article class="option">
+            <header><code>touch</code><span class="option__type">boolean</span></header>
+            <p>Whether touch input moves the flashlight.</p>
+            <p class="option__default">Default: <code>true</code></p>
+            <pre class="code-block"><code>blackout.configure({ touch: false });</code></pre>
+          </article>
+
+          <article class="option">
+            <header><code>touchBehavior</code><span class="option__type">"follow" | "hide" | "persist"</span></header>
+            <p>What happens to the flashlight when an active touch lifts off. <code>"follow"</code> keeps it in place, <code>"hide"</code> returns to full darkness, <code>"persist"</code> is an explicit alias for <code>"follow"</code>.</p>
+            <p class="option__default">Default: <code>"follow"</code></p>
+            <pre class="code-block"><code>blackout.configure({ touchBehavior: 'hide' });</code></pre>
+          </article>
+
+          <article class="option">
+            <header><code>onPointerLeave</code><span class="option__type">"freeze" | "center" | "hide"</span></header>
+            <p>What happens when the pointer leaves the viewport entirely.</p>
+            <p class="option__default">Default: <code>"freeze"</code></p>
+            <pre class="code-block"><code>blackout.configure({ onPointerLeave: 'center' });</code></pre>
+          </article>
+
+          <article class="option">
+            <header><code>initialPosition</code><span class="option__type">"center" | object</span></header>
+            <p>Where the flashlight sits before any pointer input has been received. Accepts <code>"center"</code> or an explicit <code>{ x, y }</code> point.</p>
+            <p class="option__default">Default: <code>"center"</code></p>
+            <pre class="code-block"><code>Blackout.init({ initialPosition: { x: 100, y: 100 } });</code></pre>
+          </article>
+
+          <article class="option">
+            <header><code>cursor.hide</code><span class="option__type">boolean</span></header>
+            <p>Hides the native cursor while the effect is enabled. Fully restored on <code>disable()</code>/<code>destroy()</code>.</p>
+            <p class="option__default">Default: <code>false</code></p>
+            <pre class="code-block"><code>blackout.configure({ cursor: { hide: true } });</code></pre>
+          </article>
+
+          <article class="option">
+            <header><code>accessibility.respectReducedMotion</code><span class="option__type">boolean</span></header>
+            <p>Reserved for future animated transitions. Pointer tracking itself is never animated regardless of this setting.</p>
+            <p class="option__default">Default: <code>true</code></p>
+            <pre class="code-block"><code>Blackout.init({ accessibility: { respectReducedMotion: true } });</code></pre>
+          </article>
+
+          <article class="option">
+            <header><code>zIndex</code><span class="option__type">number</span></header>
+            <p>z-index of the overlay element.</p>
+            <p class="option__default">Default: <code>2147483647</code></p>
+            <pre class="code-block"><code>Blackout.init({ zIndex: 999999 });</code></pre>
+          </article>
+        </div>
+      </section>
+
+      <!-- ============================== API ============================== -->
       <section id="api" class="section">
-        <h2>API</h2>
+        <p class="section__kicker">API reference</p>
+        <h2>Every public method</h2>
+        <div class="api-list">
+          <article class="api-item">
+            <header><code>Blackout.init(options?)</code></header>
+            <p><strong>Does:</strong> Mounts the overlay and starts pointer tracking. Idempotent — a second call updates configuration instead of creating a second overlay.</p>
+            <p><strong>Parameters:</strong> optional <code>BlackoutOptions</code>.</p>
+            <p><strong>Returns:</strong> the <code>BlackoutInstance</code> (itself), so you can chain <code>.enable()</code>.</p>
+            <p><strong>Use when:</strong> once, on page/component mount.</p>
+            <pre class="code-block"><code>const blackout = Blackout.init({ radius: 200 });</code></pre>
+          </article>
+
+          <article class="api-item">
+            <header><code>blackout.configure(options)</code></header>
+            <p><strong>Does:</strong> Updates configuration on the existing instance without recreating the overlay.</p>
+            <p><strong>Parameters:</strong> a partial <code>BlackoutOptions</code>.</p>
+            <p><strong>Returns:</strong> the instance.</p>
+            <p><strong>Use when:</strong> live-updating settings, e.g. from UI controls (see the playground above).</p>
+            <pre class="code-block"><code>blackout.configure({ radius: 300, softness: 60 });</code></pre>
+          </article>
+
+          <article class="api-item">
+            <header><code>blackout.enable()</code> / <code>blackout.disable()</code></header>
+            <p><strong>Does:</strong> Turns the effect on/off without destroying the instance or its configuration.</p>
+            <p><strong>Parameters:</strong> none.</p>
+            <p><strong>Returns:</strong> the instance.</p>
+            <p><strong>Use when:</strong> responding to a user action, like this page's "Turn On Blackout" button.</p>
+            <pre class="code-block"><code>blackout.enable();
+blackout.disable();</code></pre>
+          </article>
+
+          <article class="api-item">
+            <header><code>blackout.toggle()</code></header>
+            <p><strong>Does:</strong> Flips the current enabled state.</p>
+            <p><strong>Parameters:</strong> none.</p>
+            <p><strong>Returns:</strong> the instance.</p>
+            <p><strong>Use when:</strong> a single button should switch between on/off.</p>
+            <pre class="code-block"><code>blackout.toggle();</code></pre>
+          </article>
+
+          <article class="api-item">
+            <header><code>blackout.destroy()</code></header>
+            <p><strong>Does:</strong> Fully removes the overlay, listeners, and injected styles; cancels any pending frame; restores the cursor. Safe to <code>init()</code> again afterward.</p>
+            <p><strong>Parameters:</strong> none.</p>
+            <p><strong>Returns:</strong> <code>void</code>.</p>
+            <p><strong>Use when:</strong> unmounting a component (see the React/Vue/Svelte examples below).</p>
+            <pre class="code-block"><code>blackout.destroy();</code></pre>
+          </article>
+
+          <article class="api-item">
+            <header><code>blackout.isEnabled()</code> / <code>blackout.isInitialized()</code></header>
+            <p><strong>Does:</strong> State getters.</p>
+            <p><strong>Parameters:</strong> none.</p>
+            <p><strong>Returns:</strong> <code>boolean</code>.</p>
+            <p><strong>Use when:</strong> syncing your own UI (e.g. a status chip) with the instance's state.</p>
+            <pre class="code-block"><code>if (blackout.isEnabled()) { /* ... */ }</code></pre>
+          </article>
+
+          <article class="api-item">
+            <header><code>blackout.setPosition(x, y)</code></header>
+            <p><strong>Does:</strong> Manually moves the flashlight to a viewport coordinate.</p>
+            <p><strong>Parameters:</strong> <code>x: number</code>, <code>y: number</code> (CSS pixels, viewport-relative).</p>
+            <p><strong>Returns:</strong> the instance.</p>
+            <p><strong>Use when:</strong> scripting the reveal instead of following the pointer.</p>
+            <pre class="code-block"><code>blackout.setPosition(400, 250);</code></pre>
+          </article>
+
+          <article class="api-item">
+            <header><code>blackout.setRadius(n)</code> / <code>setSoftness(n)</code> / <code>setDarkness(n)</code></header>
+            <p><strong>Does:</strong> Shorthand for <code>configure({ radius: n })</code>, etc.</p>
+            <p><strong>Parameters:</strong> <code>n: number</code>.</p>
+            <p><strong>Returns:</strong> the instance.</p>
+            <p><strong>Use when:</strong> updating a single value.</p>
+            <pre class="code-block"><code>blackout.setRadius(220);</code></pre>
+          </article>
+
+          <article class="api-item">
+            <header><code>blackout.getOptions()</code></header>
+            <p><strong>Does:</strong> Returns the current, fully-resolved configuration.</p>
+            <p><strong>Parameters:</strong> none.</p>
+            <p><strong>Returns:</strong> <code>ResolvedBlackoutOptions</code>.</p>
+            <p><strong>Use when:</strong> reading back the current radius/softness/etc. — this is exactly how the playground's sliders stay in sync.</p>
+            <pre class="code-block"><code>const { radius } = blackout.getOptions();</code></pre>
+          </article>
+
+          <article class="api-item">
+            <header><code>blackout.on(event, fn)</code> / <code>blackout.off(event, fn)</code></header>
+            <p><strong>Does:</strong> Subscribes/unsubscribes to <code>"enable"</code>, <code>"disable"</code>, <code>"configure"</code>, <code>"destroy"</code>.</p>
+            <p><strong>Parameters:</strong> event name, listener function.</p>
+            <p><strong>Returns:</strong> the instance (for <code>on</code>/<code>off</code>).</p>
+            <p><strong>Use when:</strong> syncing external UI state to instance lifecycle events.</p>
+            <pre class="code-block"><code>blackout.on('enable', () => console.log('on'));</code></pre>
+          </article>
+
+          <article class="api-item">
+            <header><code>createBlackout()</code></header>
+            <p><strong>Does:</strong> Creates an independent Blackout instance, separate from the default singleton.</p>
+            <p><strong>Parameters:</strong> none.</p>
+            <p><strong>Returns:</strong> a new <code>BlackoutInstance</code>.</p>
+            <p><strong>Use when:</strong> an app genuinely needs more than one instance.</p>
+            <pre class="code-block"><code>import { createBlackout } from 'blackout-ui';
+const secondary = createBlackout();</code></pre>
+          </article>
+        </div>
+      </section>
+
+      <!-- =========================== INSTALL/USAGE =========================== -->
+      <section id="install" class="section">
+        <p class="section__kicker">Install</p>
+        <h2>Basic usage</h2>
+        <pre class="code-block"><code>npm install blackout-ui</code></pre>
+        <pre class="code-block"><code>import { Blackout } from "blackout-ui";
+
+const blackout = Blackout.init();
+blackout.enable();</code></pre>
+
+        <p class="section__lede">
+          <code>Blackout</code> is also available as the module's default export
+          (<code>import Blackout from "blackout-ui"</code>) — both refer to the same singleton
+          instance.
+        </p>
+
+        <h3>Full configuration example</h3>
+        <pre class="code-block"><code>import { Blackout } from "blackout-ui";
+
+const blackout = Blackout.init({
+  radius: 220,
+  softness: 45,
+  darkness: 0.95,
+  intensity: 1,
+  shape: "circle",
+  touch: true,
+  touchBehavior: "follow",
+  onPointerLeave: "freeze",
+  cursor: { hide: false },
+});
+
+// Nothing is visible until you explicitly enable it:
+blackout.enable();</code></pre>
+
+        <h3>CDN / no build step</h3>
+        <pre class="code-block"><code>&lt;script src="https://unpkg.com/blackout-ui"&gt;&lt;/script&gt;
+&lt;script&gt;
+  const blackout = BlackoutUI.init();
+  blackout.enable();
+&lt;/script&gt;</code></pre>
+
+        <h3>Module formats</h3>
+        <ul class="checklist">
+          <li>ESM — <code>dist/index.js</code></li>
+          <li>CommonJS — <code>dist/index.cjs</code></li>
+          <li>IIFE / CDN global build — <code>dist/blackout-ui.global.js</code>, exposing <code>window.BlackoutUI</code></li>
+          <li>TypeScript declarations — <code>dist/index.d.ts</code></li>
+        </ul>
+      </section>
+
+      <!-- ========================= FRAMEWORK EXAMPLES ========================= -->
+      <section id="examples" class="section">
+        <p class="section__kicker">Framework examples</p>
+        <h2>Where the moving parts go</h2>
+        <p class="section__lede">
+          The full examples live in the repository under <code>examples/</code>. Every one
+          follows the same rule: call <code>init()</code>/<code>enable()</code> only where code
+          is guaranteed to run in the browser, and call <code>destroy()</code> on unmount.
+        </p>
+
+        <div class="examples-grid">
+          <article class="example-card">
+            <h3>Vanilla JS</h3>
+            <p>No build step required. Import directly, or use the CDN global build.</p>
+            <pre class="code-block"><code>import Blackout from 'blackout-ui';
+
+const blackout = Blackout.init({ radius: 200, softness: 40 });
+document.getElementById('toggle')
+  .addEventListener('click', () => blackout.toggle());</code></pre>
+          </article>
+
+          <article class="example-card">
+            <h3>React</h3>
+            <p>Mount in <code>useEffect</code>; tear down in its cleanup function. Idempotent <code>init()</code>/reversible <code>destroy()</code> makes this safe under Strict Mode's double-invoke.</p>
+            <pre class="code-block"><code>useEffect(() => {
+  const blackout = Blackout.init(options);
+  return () => blackout.destroy();
+}, []);</code></pre>
+          </article>
+
+          <article class="example-card">
+            <h3>Next.js (App Router)</h3>
+            <p>Blackout UI's methods no-op on the server, so importing it is safe anywhere. Actually calling <code>init()</code> needs a <code>'use client'</code> component mounted via <code>useEffect</code>.</p>
+            <pre class="code-block"><code>'use client';
+useEffect(() => {
+  const blackout = Blackout.init(options);
+  return () => blackout.destroy();
+}, []);</code></pre>
+          </article>
+
+          <article class="example-card">
+            <h3>Vue / Nuxt</h3>
+            <p>Use <code>onMounted</code>/<code>onUnmounted</code>. In Nuxt, this already only runs client-side.</p>
+            <pre class="code-block"><code>onMounted(() => Blackout.init());
+onUnmounted(() => Blackout.destroy());</code></pre>
+          </article>
+
+          <article class="example-card">
+            <h3>Svelte / SvelteKit</h3>
+            <p>Use <code>onMount</code>/<code>onDestroy</code>. In SvelteKit, <code>onMount</code> only ever runs in the browser.</p>
+            <pre class="code-block"><code>onMount(() => Blackout.init());
+onDestroy(() => Blackout.destroy());</code></pre>
+          </article>
+        </div>
+      </section>
+
+      <!-- ======================== INTERACTION EXAMPLES ======================== -->
+      <section id="use-cases" class="section">
+        <p class="section__kicker">Use cases</p>
+        <h2>A visual interaction primitive, not a theme</h2>
+        <p class="section__lede">
+          Blackout UI is a building block for interaction, not a replacement for your site's
+          styling. A few places it fits:
+        </p>
+        <div class="features">
+          <article class="feature">
+            <h3>Interactive portfolios</h3>
+            <p>A dramatic, deliberate reveal for case studies or hero imagery.</p>
+          </article>
+          <article class="feature">
+            <h3>Landing pages</h3>
+            <p>Turn a static product screenshot into something the visitor has to explore.</p>
+          </article>
+          <article class="feature">
+            <h3>Creative / experimental sites</h3>
+            <p>Use the flashlight as a first-class part of the visual identity.</p>
+          </article>
+          <article class="feature">
+            <h3>Games and experiments</h3>
+            <p>Darkness-and-reveal as an interaction mechanic, not just decoration.</p>
+          </article>
+          <article class="feature">
+            <h3>Events / launches</h3>
+            <p>A single moment of "unveiling" content without building a custom effect from scratch.</p>
+          </article>
+        </div>
+      </section>
+
+      <!-- ========================= ACCESSIBILITY ========================= -->
+      <section id="accessibility" class="section">
+        <p class="section__kicker">Accessibility</p>
+        <h2>What's actually implemented</h2>
+        <ul class="checklist">
+          <li>The overlay element is <code>aria-hidden="true"</code> and contains no text or focusable elements — it never enters the accessibility tree and can't trap focus.</li>
+          <li>The overlay is <code>pointer-events: none</code> by default, so hover states, links, buttons, form controls, drag-and-drop, and text selection all keep working exactly as they would without the library.</li>
+          <li>Keyboard navigation (Tab, Shift+Tab, Enter, Space, arrow keys) is unaffected — the overlay has nothing focusable to land on.</li>
+          <li>An <code>accessibility.respectReducedMotion</code> option exists for future animated transitions; pointer tracking itself has no animation to reduce.</li>
+          <li>The underlying page's own accessibility (contrast, semantics, landmarks) is exactly what it was before Blackout UI was added — the library has nothing to add or take away there, since it never modifies that page.</li>
+        </ul>
+      </section>
+
+      <!-- ========================== EDGE CASES ========================== -->
+      <section id="edge-cases" class="section">
+        <p class="section__kicker">Behavior &amp; edge cases</p>
+        <h2>Honest answers, not assumptions</h2>
         <div class="table-wrap">
           <table>
-            <thead>
-              <tr>
-                <th>Method</th>
-                <th>Does</th>
-              </tr>
-            </thead>
+            <thead><tr><th>Situation</th><th>Behavior</th></tr></thead>
             <tbody>
-              <tr><td><code>init(options?)</code></td><td>Mounts the overlay. Safe to call more than once.</td></tr>
-              <tr><td><code>configure(options)</code></td><td>Updates settings in place, no re-mount.</td></tr>
-              <tr><td><code>enable()</code> / <code>disable()</code></td><td>Toggle the effect without tearing it down.</td></tr>
-              <tr><td><code>toggle()</code></td><td>Flip the current enabled state.</td></tr>
-              <tr><td><code>destroy()</code></td><td>Fully removes the overlay, listeners, and restores the cursor.</td></tr>
-              <tr><td><code>setPosition(x, y)</code></td><td>Manually move the flashlight.</td></tr>
-              <tr><td><code>setRadius/setSoftness/setDarkness(n)</code></td><td>Shorthand for <code>configure()</code>.</td></tr>
-              <tr><td><code>on(event, fn)</code> / <code>off(event, fn)</code></td><td>Listen for <code>enable</code>, <code>disable</code>, <code>configure</code>, <code>destroy</code>.</td></tr>
+              <tr><td>Light/dark theme switching</td><td>No special handling needed — the flashlight reveals whatever is currently rendered, live.</td></tr>
+              <tr><td>Fixed / sticky elements</td><td>Rendered normally underneath; the overlay is <code>position: fixed</code> to the viewport and repaints independently of page scroll.</td></tr>
+              <tr><td>Modals, images, video, canvas</td><td>Revealed as-is through the flashlight. Blackout UI never touches their rendering.</td></tr>
+              <tr><td>Responsive layouts / resize</td><td>The overlay listens for <code>resize</code> and repaints; it never assumes a fixed viewport size.</td></tr>
+              <tr><td>Touch devices</td><td>Pointer Events cover touch input directly; see the <code>touch</code> / <code>touchBehavior</code> options above.</td></tr>
+              <tr><td>SPA navigation</td><td>The overlay is independent of any specific page element, so client-side route changes don't require re-initialization.</td></tr>
+              <tr><td>SSR</td><td>Importing the package and calling any method is a documented no-op on the server — see the SSR-safety notes above.</td></tr>
+              <tr><td>Same-origin iframes</td><td>Visually covered by the overlay, since it sits above the whole viewport.</td></tr>
+              <tr><td>Cross-origin iframes</td><td><strong>Limitation:</strong> the overlay cannot reach into a cross-origin iframe's own document — browsers don't allow that, by design. It still visually covers the iframe from the parent page's viewport.</td></tr>
             </tbody>
           </table>
         </div>
-        <p class="section__lede">Full option reference and framework examples are in the <a href="https://github.com/blackout-ui/blackout-ui#readme">README</a>.</p>
+      </section>
+
+      <!-- ============================ FAQ ============================ -->
+      <section id="faq" class="section">
+        <p class="section__kicker">FAQ</p>
+        <h2>Common questions</h2>
+        <div class="faq-list">
+          <details>
+            <summary>Does Blackout UI change my website's colors?</summary>
+            <p>No. It overlays the page with a black layer and cuts a reveal hole around the pointer — it never converts your page into another theme or rewrites its CSS.</p>
+          </details>
+          <details>
+            <summary>Does it work with dark mode?</summary>
+            <p>Yes. It reveals whatever theme is currently rendered underneath, with no theme detection required.</p>
+          </details>
+          <details>
+            <summary>Does it modify my DOM?</summary>
+            <p>It adds exactly one overlay <code>&lt;div&gt;</code> and one <code>&lt;style&gt;</code> tag. It never modifies, clones, or restyles your existing elements.</p>
+          </details>
+          <details>
+            <summary>Does it block clicks?</summary>
+            <p>No, by default the overlay is <code>pointer-events: none</code>. Clicks, hovers, and drag interactions pass straight through to your page.</p>
+          </details>
+          <details>
+            <summary>Does it work on mobile?</summary>
+            <p>Yes — touch input is handled through the Pointer Events API. See the <code>touch</code> and <code>touchBehavior</code> options.</p>
+          </details>
+          <details>
+            <summary>Does it work with React/Next.js?</summary>
+            <p>Yes — see the framework examples above. Call <code>init()</code> in <code>useEffect</code> and <code>destroy()</code> in its cleanup.</p>
+          </details>
+          <details>
+            <summary>Is it SSR safe?</summary>
+            <p>Yes. Every public method checks for a browser environment first and is a documented no-op on the server.</p>
+          </details>
+          <details>
+            <summary>Does it require a framework?</summary>
+            <p>No. The core package has no framework dependency and works with plain JavaScript.</p>
+          </details>
+          <details>
+            <summary>Does it have dependencies?</summary>
+            <p>No runtime dependencies — the published package's <code>dependencies</code> field is empty.</p>
+          </details>
+          <details>
+            <summary>Can I turn it on/off dynamically?</summary>
+            <p>Yes — <code>blackout.enable()</code>, <code>blackout.disable()</code>, and <code>blackout.toggle()</code>, exactly like the button at the top of this page.</p>
+          </details>
+        </div>
       </section>
     </main>
 
     <footer class="footer">
-      <p>MIT licensed. No network requests, no telemetry, no tracking.</p>
+      <div class="footer__inner">
+        <div class="footer__brand">
+          <span class="wordmark">Blackout UI</span>
+          <p>A fullscreen blackout / flashlight interaction layer for the web.</p>
+          <p class="footer__version">v<span id="footer-version">0.2.0</span></p>
+        </div>
+        <div class="footer__links">
+          <div>
+            <h4>Docs</h4>
+            <a href="#configuration">Configuration</a>
+            <a href="#api">API reference</a>
+            <a href="#examples">Framework examples</a>
+            <a href="#faq">FAQ</a>
+          </div>
+          <div>
+            <h4>Project</h4>
+            <a href="https://www.npmjs.com/package/blackout-ui">npm</a>
+            <a href="https://github.com/jithinkrishnanrs/blackout-ui">GitHub</a>
+            <a href="https://github.com/jithinkrishnanrs/blackout-ui/blob/main/LICENSE">MIT License</a>
+          </div>
+        </div>
+      </div>
+      <p class="footer__meta">Blackout UI v<span id="footer-version-meta">0.2.0</span> · MIT licensed · No network requests, no telemetry, no tracking.</p>
     </footer>
 
     <script type="module" src="./app.js"></script>

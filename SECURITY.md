@@ -3,9 +3,10 @@
 ## Reporting a vulnerability
 
 Please report security issues privately via GitHub's "Report a vulnerability"
-feature on this repository, or by emailing the maintainers listed in the
-repository's contact information. Do not open a public issue for a
-suspected vulnerability.
+feature on the [blackout-ui repository](https://github.com/jithinkrishnanrs/blackout-ui/security/advisories/new),
+or by opening a private conversation with the maintainer
+([@jithinkrishnanrs](https://github.com/jithinkrishnanrs)). Do not open a
+public issue for a suspected vulnerability.
 
 Include a description of the issue, steps to reproduce, and the affected
 version if known. We aim to acknowledge reports within a few business days.

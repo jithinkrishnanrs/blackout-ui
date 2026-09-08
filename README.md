@@ -1,9 +1,16 @@
 # Blackout UI
 
+[![CI](https://github.com/jithinkrishnanrs/blackout-ui/actions/workflows/ci.yml/badge.svg)](https://github.com/jithinkrishnanrs/blackout-ui/actions/workflows/ci.yml)
+[![npm version](https://img.shields.io/npm/v/blackout-ui.svg)](https://www.npmjs.com/package/blackout-ui)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](./LICENSE)
+[![bundle size](https://img.shields.io/badge/gzip-~3.5KB-brightgreen)](#performance)
+
 A tiny, framework-agnostic library that turns any webpage into a **blackout /
 flashlight interface**. It doesn't touch your page's colors, CSS, or theme —
 it just drops a black layer over everything and cuts a hole around the
 pointer.
+
+**Repository:** [github.com/jithinkrishnanrs/blackout-ui](https://github.com/jithinkrishnanrs/blackout-ui)
 
 ```
 Your page renders normally
@@ -280,7 +287,7 @@ no-op.
 ## Local development
 
 ```bash
-git clone https://github.com/blackout-ui/blackout-ui.git
+git clone https://github.com/jithinkrishnanrs/blackout-ui.git
 cd blackout-ui
 npm install
 npm run dev        # tsup --watch
