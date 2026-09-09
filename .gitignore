@@ -8,3 +8,4 @@ test-results
 .vercel
 .next
 demo/vendor
+tests/e2e/fixture/vendor

@@ -6,7 +6,8 @@ export default defineConfig({
   retries: process.env.CI ? 2 : 0,
   reporter: 'list',
   webServer: {
-    command: 'npm run build && node scripts/prepare-demo.mjs && npx http-server demo -p 4173 -s',
+    command:
+      'npm run build && node scripts/prepare-e2e-fixture.mjs && npx http-server tests/e2e/fixture -p 4173 -s',
     port: 4173,
     reuseExistingServer: !process.env.CI,
   },

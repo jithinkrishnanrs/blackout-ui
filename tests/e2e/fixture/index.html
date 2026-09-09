@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Blackout UI — E2E fixture</title>
+    <style>
+      /*
+       * Minimal, deterministic layout styling only. No overlay/flashlight
+       * CSS lives here — the real library injects its own scoped
+       * stylesheet at runtime (see src/core/Overlay.ts).
+       */
+      * {
+        box-sizing: border-box;
+      }
+      html,
+      body {
+        margin: 0;
+        padding: 0;
+        max-width: 100%;
+      }
+      body {
+        font-family: system-ui, sans-serif;
+        padding: 2rem;
+      }
+      .filler {
+        height: 3000px; /* tall enough to make the page genuinely scrollable */
+      }
+    </style>
+  </head>
+  <body>
+    <h1 class="hero__tagline">Blackout UI end-to-end test fixture</h1>
+    <p>
+      This page exists only for automated browser tests. It is intentionally
+      simple, deterministic, and independent of the public demo site at
+      <code>demo/</code>, so redesigning that site never breaks library
+      integration tests.
+    </p>
+
+    <button id="theme-toggle" type="button">Toggle theme</button>
+    <button id="blackout-toggle" type="button">Toggle blackout</button>
+
+    <p>
+      <label for="radius">Radius <span id="radius-value">180</span></label><br />
+      <input id="radius" type="range" min="40" max="500" value="180" />
+    </p>
+
+    <a href="#footer-anchor">Jump to footer</a>
+
+    <div class="filler" aria-hidden="true"></div>
+
+    <p id="footer-anchor">End of fixture content.</p>
+
+    <!-- Loads the actual built library (copied from dist/ by
+         scripts/prepare-e2e-fixture.mjs) — never a re-implementation. -->
+    <script type="module" src="./app.js"></script>
+  </body>
+</html>

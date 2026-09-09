@@ -35,14 +35,38 @@ test.describe('Blackout UI overlay', () => {
   });
 
   test('the flashlight follows the pointer', async ({ page }) => {
-    await page.goto('/');
-    await page.mouse.move(100, 100);
-    const bg1 = await page.locator('.blackout-ui-root').evaluate((el) => el.style.background);
-    await page.mouse.move(600, 400);
-    const bg2 = await page.locator('.blackout-ui-root').evaluate((el) => el.style.background);
-    expect(bg1).not.toEqual(bg2);
-    expect(bg2).toContain('600px 400px');
-  });
+  await page.goto('/');
+
+  const viewport = page.viewportSize();
+  if (!viewport) {
+    throw new Error('Viewport size is unavailable');
+  }
+
+  const startX = 20;
+  const startY = 20;
+  const targetX = viewport.width - 20;
+  const targetY = viewport.height - 20;
+
+  await page.mouse.move(startX, startY);
+
+  const bg1 = await page
+    .locator('.blackout-ui-root')
+    .evaluate((el) => el.style.background);
+
+  await page.mouse.move(targetX, targetY);
+
+  await expect
+    .poll(() =>
+      page.locator('.blackout-ui-root').evaluate((el) => el.style.background),
+    )
+    .not.toEqual(bg1);
+
+  const bg2 = await page
+    .locator('.blackout-ui-root')
+    .evaluate((el) => el.style.background);
+
+  expect(bg2).toContain(`${targetX}px ${targetY}px`);
+});
 
   test('text selection still works through the overlay', async ({ page }) => {
     await page.goto('/');
@@ -56,8 +80,14 @@ test.describe('Blackout UI overlay', () => {
   test('scrolling works normally with the overlay enabled', async ({ page }) => {
     await page.goto('/');
     await page.mouse.wheel(0, 2000);
-    const scrollY = await page.evaluate(() => window.scrollY);
-    expect(scrollY).toBeGreaterThan(0);
+    // The synthetic wheel event is dispatched synchronously, but the browser
+    // applies the resulting scroll offset asynchronously (compositor-thread
+    // scrolling) — reading window.scrollY immediately after can observe a
+    // stale value. expect.poll() retries the read until it settles, the
+    // same way Playwright's own locator matchers (e.g. toBeVisible()) retry
+    // instead of asserting once immediately. The condition itself (> 0) is
+    // unchanged from the original assertion.
+    await expect.poll(() => page.evaluate(() => window.scrollY)).toBeGreaterThan(0);
     // Overlay stays pinned to the viewport, not the document.
     const overlayTop = await page
       .locator('.blackout-ui-root')
