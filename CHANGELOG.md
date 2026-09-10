@@ -4,7 +4,24 @@ All notable changes to this project are documented in this file. The format
 follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and this
 project adheres to [Semantic Versioning](https://semver.org/).
 
-## [0.2.0] — 2026-09-07
+## [0.3.1] — 2026-09-09
+
+### Changed
+
+- E2E test infrastructure: the Playwright suite now runs against a
+  dedicated, isolated fixture (`tests/e2e/fixture/`, prepared by
+  `scripts/prepare-e2e-fixture.mjs`) instead of the public demo site, so
+  future demo redesigns can no longer break library integration tests.
+- Stabilized the cross-browser E2E suite: the pointer-following test now
+  uses viewport-relative coordinates (so it works on narrow mobile
+  viewports, not just desktop-sized ones) and `expect.poll()` for
+  pointer/scroll assertions, replacing single, potentially-racy reads of
+  asynchronously-updated values.
+
+This is a test/CI-only release — no changes to the runtime library in
+`src/`, and no changes to the public API.
+
+## [0.2.0] — 2026-09-08
 
 ### Added
 
@@ -26,10 +43,16 @@ project adheres to [Semantic Versioning](https://semver.org/).
 ### Changed
 
 - No changes to the public API or core library behavior in this release —
-  see [0.1.0](#010--2026-09-06) for the full API surface, which is
+  see [0.1.0](#010--2026-09-07) for the full API surface, which is
   unchanged.
 
-## [0.1.0] — 2026-09-06
+## [0.1.1] — 2026-09-07
+
+### Changed
+
+- Version bump only; no functional changes from 0.1.0.
+
+## [0.1.0] — 2026-09-07
 
 ### Added
 

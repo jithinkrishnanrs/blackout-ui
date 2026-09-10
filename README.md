@@ -1,35 +1,84 @@
 # Blackout UI
 
-[![CI](https://github.com/jithinkrishnanrs/blackout-ui/actions/workflows/ci.yml/badge.svg)](https://github.com/jithinkrishnanrs/blackout-ui/actions/workflows/ci.yml)
 [![npm version](https://img.shields.io/npm/v/blackout-ui.svg)](https://www.npmjs.com/package/blackout-ui)
+[![npm downloads](https://img.shields.io/npm/dm/blackout-ui.svg)](https://www.npmjs.com/package/blackout-ui)
+[![CI](https://github.com/jithinkrishnanrs/blackout-ui/actions/workflows/ci.yml/badge.svg)](https://github.com/jithinkrishnanrs/blackout-ui/actions/workflows/ci.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](./LICENSE)
 [![bundle size](https://img.shields.io/badge/gzip-~3.5KB-brightgreen)](#performance)
 
-A tiny, framework-agnostic library that turns any webpage into a **blackout /
-flashlight interface**. It doesn't touch your page's colors, CSS, or theme —
-it just drops a black layer over everything and cuts a hole around the
-pointer.
+**Blackout UI** is a lightweight JavaScript/TypeScript library that drops a
+fullscreen black overlay over your existing webpage and reveals the page —
+exactly as it already renders — through a flashlight/spotlight around the
+pointer. It's a cursor spotlight effect, a blackout overlay, a fullscreen
+reveal effect — however you want to describe it, the point is the same: your
+page never gets recolored, rewritten, or rebuilt.
 
-**Repository:** [github.com/jithinkrishnanrs/blackout-ui](https://github.com/jithinkrishnanrs/blackout-ui)
+**Live Demo:** [Try Blackout UI →](https://blackout-ui.vercel.app)
+
+## Contents
+
+- [Not a dark-mode library](#not-a-dark-mode-library)
+- [Why Blackout UI](#why-blackout-ui)
+- [Install](#install)
+- [Quick start](#quick-start)
+- [Configuration](#configuration)
+- [API](#api)
+- [Touch](#touch)
+- [Accessibility](#accessibility)
+- [SSR](#ssr)
+- [Dynamic theme switching](#dynamic-theme-switching)
+- [Framework integration](#framework-integration)
+- [Browser support](#browser-support)
+- [Performance](#performance)
+- [Limitations](#limitations)
+- [Error handling](#error-handling)
+- [Local development](#local-development)
+- [Publishing](#publishing)
+- [Deploying the demo](#deploying-the-demo)
+- [Contributing](#contributing) / [Security](#security) / [License](#license)
+
+## Not a dark-mode library
+
+This trips people up, so it's worth being explicit up front. Blackout UI is
+**not** a dark-mode / theme-conversion library. It does not:
+
+- recolor the webpage,
+- invert colors,
+- rewrite your DOM or CSS,
+- clone or rasterize the page (no canvas, no screenshots).
+
+It does exactly one thing: it adds a black `<div>` above your existing page
+and cuts a pointer-controlled hole in it. The underlying page stays fully
+responsible for its own theme, colors, and rendering — light mode, dark
+mode, or anything in between.
 
 ```
-Your page renders normally
-        │
-        ▼
- Blackout UI overlay        ← position: fixed, pointer-events: none
-        │
-        ├── opaque black everywhere
-        └── a circular hole around the cursor, revealing your page exactly
-            as it already is — light mode, dark mode, whatever it is
+Normal webpage
+      ↓
+Blackout overlay added above it (position: fixed, pointer-events: none)
+      ↓
+Black everywhere, except the reveal area
+      ↓
+Pointer acts as a flashlight — revealing the real, unmodified page underneath
 ```
+
+## Why Blackout UI
 
 - **Zero runtime dependencies.**
-- **~3.5 KB gzipped** (core ESM/CJS build).
+- **~3.5 KB gzipped** (core ESM/CJS build) — no canvas, no WebGL, no
+  animation engine.
 - **Framework agnostic** — vanilla JS, React, Vue, Svelte, Next.js, Nuxt,
   SvelteKit, Astro, Angular, static HTML.
-- **Doesn't touch your CSS.** No dark-mode conversion, no color inversion, no
-  DOM rewriting of your content.
-- **SSR-safe.** Importing the package on the server is a no-op.
+- **Doesn't touch your CSS.** No dark-mode conversion, no color inversion,
+  no DOM rewriting of your content.
+- **SSR-safe.** Importing the package on the server is a documented no-op.
+- **Pointer Events based** — one unified code path for mouse, pen, and
+  touch, batched through `requestAnimationFrame`.
+- **No analytics, no tracking, no network requests at runtime.**
+- **Accessible overlay behavior** — `aria-hidden`, non-focusable,
+  `pointer-events: none` by default.
+- **Works with dynamic theme switching** — the flashlight just reveals
+  whatever is currently rendered.
 - Written in TypeScript, ships full type declarations.
 
 ## Install
@@ -150,10 +199,11 @@ no extra listeners. Scrolling is never blocked — the library does not set
 - `disable()` (or never calling `enable()`) always leaves the page fully
   usable; the effect never makes a page permanently inaccessible.
 
-Because the underlying page is never modified, its own contrast and
-semantics are exactly what they were before Blackout UI was added — make
-sure *that* page is accessible; Blackout UI has nothing to add or take away
-there.
+Blackout UI does not alter the accessibility semantics of the underlying
+webpage in any way — because the underlying page is never modified, its own
+contrast and semantics are exactly what they were before Blackout UI was
+added. Make sure *that* page is accessible; Blackout UI has nothing to add
+or take away there.
 
 ## SSR
 
@@ -173,6 +223,10 @@ dark mode (or back), the flashlight simply continues revealing whatever is
 currently rendered — no re-detection, no re-render, no special API needed.
 
 ## Framework integration
+
+Blackout UI is plain DOM and CSS underneath, so "integration" is always the
+same shape: call `init()` once the component is mounted in the browser, and
+call `destroy()` on unmount/teardown.
 
 <details>
 <summary>React</summary>
@@ -228,6 +282,43 @@ Full example: [`examples/vue`](./examples/vue).
 ```
 
 Full example: [`examples/svelte`](./examples/svelte).
+</details>
+
+<details>
+<summary>Astro</summary>
+
+Astro's client-side `<script>` tags already run only in the browser, so no
+lifecycle guard is needed for a plain island:
+
+```astro
+<script>
+  import Blackout from 'blackout-ui';
+  Blackout.init();
+</script>
+```
+
+If you're calling this from inside a framework component island (React,
+Vue, Svelte, etc. embedded in Astro), follow that framework's pattern above
+instead.
+</details>
+
+<details>
+<summary>Angular</summary>
+
+```ts
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import Blackout from 'blackout-ui';
+
+@Component({ selector: 'app-root', template: `...` })
+export class AppComponent implements OnInit, OnDestroy {
+  ngOnInit() {
+    Blackout.init();
+  }
+  ngOnDestroy() {
+    Blackout.destroy();
+  }
+}
+```
 </details>
 
 <details>
@@ -294,14 +385,14 @@ npm run dev        # tsup --watch
 ```
 
 ```bash
-npm run build       # produce dist/ (ESM, CJS, .d.ts, IIFE global build)
-npm test             # vitest, single run
-npm run test:watch   # vitest, watch mode
-npm run test:e2e     # Playwright (requires `npx playwright install` once)
+npm run build        # produce dist/ (ESM, CJS, .d.ts, IIFE global build)
+npm test              # vitest, single run
+npm run test:watch    # vitest, watch mode
+npm run test:e2e      # Playwright (requires `npx playwright install` once)
 npm run typecheck
 npm run lint
 npm run format
-npm run check        # typecheck + lint + test + build + bundle-size check
+npm run check         # typecheck + lint + test + build + bundle-size check
 ```
 
 Run the demo locally (builds the library and serves `demo/` on a real HTTP
@@ -310,6 +401,15 @@ server, using the actual `dist/` output — not a re-implementation):
 ```bash
 npm run demo
 ```
+
+### E2E test architecture
+
+The public demo site (`demo/`) is **not** the E2E test target. The
+Playwright suite in `tests/e2e/` runs against a dedicated, isolated fixture
+under `tests/e2e/fixture/`, prepared by `scripts/prepare-e2e-fixture.mjs`
+(which copies the real built library in, same as the demo does — never a
+re-implementation). This keeps the demo free to be redesigned without
+breaking library integration tests that depend on stable test controls.
 
 ### Testing the package inside another project
 
@@ -354,7 +454,9 @@ Document breaking changes in [`CHANGELOG.md`](./CHANGELOG.md) and follow
 ## Deploying the demo
 
 `demo/` is a static site with one build step (`npm run demo` locally copies
-`dist/` into `demo/vendor/`). Any static host works:
+`dist/` into `demo/vendor/`). The live demo at
+[blackout-ui.vercel.app](https://blackout-ui.vercel.app) is hosted on
+Vercel. Any static host works:
 
 - **Vercel / Netlify / Cloudflare Pages**: build command
   `npm run build && node scripts/prepare-demo.mjs`, output directory `demo`.
